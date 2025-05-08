@@ -4,15 +4,14 @@ import { useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
-import { Category } from '@/payload-types';
-
+import { CustomCategory } from '../types';
 import { SubcategoryMenu } from './subcategory-menu';
 import { useDropdownPosition } from './use-dropdown-position';
 
 import { Button } from '@/components/ui/button';
 
 interface Props {
-	category: Category;
+	category: CustomCategory;
 	isActive?: boolean;
 	isNavigationHovered?: boolean;
 }
@@ -51,6 +50,8 @@ export const CategoryDropdown = ({
 						isActive &&
 							!isNavigationHovered &&
 							'border-main bg-white',
+						isOpen &&
+							'shadow-shadow translate-x-reverseBoxShadowX translate-y-reverseBoxShadowY border-black bg-white',
 					)}
 				>
 					{category.name}

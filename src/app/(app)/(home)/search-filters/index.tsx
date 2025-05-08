@@ -1,8 +1,9 @@
+import { CustomCategory } from '../types';
 import { Categories } from './categories';
 import { SearchInput } from './seacrh-input';
 
 interface Props {
-	data: any; // TODO add types
+	data: CustomCategory[];
 }
 
 export const SearchFilters = ({ data }: Props) => {
