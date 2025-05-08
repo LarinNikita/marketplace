@@ -4,15 +4,15 @@ import { useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
-import { Category } from '@/payload-types';
-
+import { CustomCategory } from '../types';
 import { SubcategoryMenu } from './subcategory-menu';
 import { useDropdownPosition } from './use-dropdown-position';
 
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 interface Props {
-	category: Category;
+	category: CustomCategory;
 	isActive?: boolean;
 	isNavigationHovered?: boolean;
 }
@@ -36,12 +36,20 @@ export const CategoryDropdown = ({
 
 	const dropdownPosition = getDropdownPosition();
 
+	// TODO Potential improve mobile
+	// const toggleDropdown = () => {
+	// 	if (category.subcategories?.docs?.length) {
+	// 		setIsOpen(!isOpen);
+	// 	}
+	// };
+
 	return (
 		<div
 			className="relative"
 			ref={dropdownRef}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
+			// onClick={toggleDropdown}
 		>
 			<div className="relative">
 				<Button
@@ -50,10 +58,17 @@ export const CategoryDropdown = ({
 						'h-11 rounded-full border border-transparent bg-transparent px-4 hover:border-black',
 						isActive &&
 							!isNavigationHovered &&
-							'border-main bg-white',
+							'border-black bg-white',
+						isOpen &&
+							'shadow-shadow translate-x-reverseBoxShadowX translate-y-reverseBoxShadowY border-black bg-white',
 					)}
 				>
-					{category.name}
+					<Link
+						// prefetch // TODO maybe improve this
+						href={`/${category.slug === 'all' ? '' : category.slug}`}
+					>
+						{category.name}
+					</Link>
 				</Button>
 				{category.subcategories &&
 					category.subcategories.length > 0 && (
