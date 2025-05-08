@@ -68,8 +68,9 @@ export const Navbar = () => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
 	return (
-		<nav className="flex h-20 justify-between border-b bg-white font-medium">
-			<Link href="/" className="flex items-center pl-6">
+		// TODO Refactor responsive ui
+		<nav className="flex h-20 justify-between overflow-clip border-b bg-white font-medium">
+			<Link href="/" className="flex items-center px-6">
 				<span
 					className={cn('text-5xl font-semibold', poppins.className)}
 				>
