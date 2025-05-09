@@ -1,5 +1,9 @@
-import { initTRPC } from '@trpc/server';
 import { cache } from 'react';
+import { initTRPC } from '@trpc/server';
+
+import { getPayload } from 'payload';
+import config from '@payload-config';
+
 export const createTRPCContext = cache(async () => {
 	/**
 	 * @see: https://trpc.io/docs/server/context
@@ -19,4 +23,8 @@ const t = initTRPC.create({
 // Base router and procedure helpers
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
-export const baseProcedure = t.procedure;
+export const baseProcedure = t.procedure.use(async ({ next }) => {
+	const payload = await getPayload({ config });
+
+	return next({ ctx: { db: payload } });
+});
