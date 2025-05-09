@@ -5,6 +5,8 @@ import './globals.css';
 
 import { TRPCReactProvider } from '@/trpc/client';
 
+import { Toaster } from '@/components/ui/sonner';
+
 const dmSans = DM_Sans({
 	subsets: ['latin'],
 });
@@ -22,7 +24,10 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning={true}>
 			<body className={`${dmSans.className} antialiased`}>
-				<TRPCReactProvider>{children}</TRPCReactProvider>
+				<TRPCReactProvider>
+					{children}
+					<Toaster />
+				</TRPCReactProvider>
 			</body>
 		</html>
 	);
