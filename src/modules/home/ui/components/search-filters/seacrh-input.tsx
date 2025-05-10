@@ -42,7 +42,7 @@ export const SearchInput = ({ disabled }: Props) => {
 			</Button>
 			{session.data?.user && (
 				<Button variant="reverse" asChild className="bg-white">
-					<Link href="/library">
+					<Link prefetch href="/library">
 						<BookmarkCheckIcon />
 						Library
 					</Link>
