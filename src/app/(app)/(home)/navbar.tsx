@@ -6,10 +6,13 @@ import Link from 'next/link';
 import { MenuIcon } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import { usePathname } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 
 import { cn } from '@/lib/utils';
 
 import { NavbarSidebar } from './navbar-sidebar';
+
+import { useTRPC } from '@/trpc/client';
 
 import { Button } from '@/components/ui/button';
 
@@ -67,6 +70,9 @@ export const Navbar = () => {
 	const pathname = usePathname();
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+	const trpc = useTRPC();
+	const session = useQuery(trpc.auth.session.queryOptions());
+
 	return (
 		// TODO Refactor responsive ui
 		<nav className="flex h-20 justify-between overflow-clip border-b bg-white font-medium">
@@ -93,26 +99,38 @@ export const Navbar = () => {
 					</NavbarItem>
 				))}
 			</div>
-			<div className="hidden lg:flex">
-				<Button
-					asChild
-					variant="noShadow"
-					className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-pink-400"
-				>
-					<Link prefetch href="/sign-in">
-						Log in
-					</Link>
-				</Button>
-				<Button
-					asChild
-					variant="noShadow"
-					className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black"
-				>
-					<Link prefetch href="sign-up">
-						Start selling
-					</Link>
-				</Button>
-			</div>
+			{session.data?.user ? (
+				<div className="hidden lg:flex">
+					<Button
+						asChild
+						variant="noShadow"
+						className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black"
+					>
+						<Link href="/admin">Dashboard</Link>
+					</Button>
+				</div>
+			) : (
+				<div className="hidden lg:flex">
+					<Button
+						asChild
+						variant="noShadow"
+						className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-pink-400"
+					>
+						<Link prefetch href="/sign-in">
+							Log in
+						</Link>
+					</Button>
+					<Button
+						asChild
+						variant="noShadow"
+						className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black"
+					>
+						<Link prefetch href="/sign-up">
+							Start selling
+						</Link>
+					</Button>
+				</div>
+			)}
 			<div className="flex items-center justify-center lg:hidden">
 				<Button
 					variant="noShadow"
