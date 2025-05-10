@@ -6,8 +6,8 @@ import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { Poppins } from 'next/font/google';
 import { useRouter } from 'next/navigation';
-import { useMutation } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { cn } from '@/lib/utils';
 
@@ -36,10 +36,15 @@ export const SignUpView = () => {
 	const router = useRouter();
 
 	const trpc = useTRPC();
+	const queryClient = useQueryClient();
+
 	const register = useMutation(
 		trpc.auth.register.mutationOptions({
-			onSuccess() {
-				toast.success('Sign up successfully');
+			onSuccess: async () => {
+				toast.success('Registry successfully');
+				await queryClient.invalidateQueries(
+					trpc.auth.session.queryFilter(),
+				);
 				router.push('/'); // Redirect to home page
 			},
 			onError: (error) => {
