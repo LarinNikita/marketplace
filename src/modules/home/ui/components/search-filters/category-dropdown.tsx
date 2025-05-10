@@ -55,6 +55,7 @@ export const CategoryDropdown = ({
 		>
 			<div className="relative">
 				<Button
+					asChild
 					variant="reverse"
 					className={cn(
 						'h-11 rounded-full border border-transparent bg-transparent px-4 hover:border-black',
