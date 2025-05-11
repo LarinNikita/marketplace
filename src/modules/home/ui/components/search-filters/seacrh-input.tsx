@@ -34,8 +34,8 @@ export const SearchInput = ({ disabled }: Props) => {
 				<Input className="pl-8" placeholder="Search products" />
 			</div>
 			<Button
-				variant="noShadow"
-				className="flex size-10 shrink-0 bg-white lg:hidden"
+				variant="reverse"
+				className="flex size-10 shrink-0 cursor-pointer bg-white lg:hidden"
 				onClick={() => setIsSidebarOpen(true)}
 			>
 				<ListFilterIcon />
