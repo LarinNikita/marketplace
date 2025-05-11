@@ -27,6 +27,12 @@ export const Products: CollectionConfig = {
 			hasMany: false, // One product can belong to one category
 		},
 		{
+			name: 'tags',
+			type: 'relationship',
+			relationTo: 'tags',
+			hasMany: true, // One product can belong to many tags
+		},
+		{
 			name: 'image',
 			type: 'upload',
 			relationTo: 'media',
