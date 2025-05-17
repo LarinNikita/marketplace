@@ -23,7 +23,7 @@ const ProductFilter = ({ title, className, children }: ProductFilterProps) => {
 	const Icon = isOpen ? ChevronDownIcon : ChevronRightIcon;
 
 	return (
-		<div className={cn('flex flex-col gap-2 border-b p-4')}>
+		<div className={cn('flex flex-col gap-2 border-b p-4', className)}>
 			<div
 				onClick={() => setIsOpen((current) => !current)}
 				className="flex cursor-pointer items-center justify-between"
@@ -87,7 +87,7 @@ export const ProductFilters = () => {
 					onMaxPriceChange={(value) => onChange('maxPrice', value)}
 				/>
 			</ProductFilter>
-			<ProductFilter title="Tags">
+			<ProductFilter title="Tags" className="border-b-0">
 				<TagsFilter
 					value={filters.tags}
 					onChange={(value) => onChange('tags', value)}

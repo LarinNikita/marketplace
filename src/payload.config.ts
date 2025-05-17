@@ -44,7 +44,7 @@ export default buildConfig({
 				includeDefaultField: false,
 			},
 			userHasAccessToAllTenants: (user) =>
-				Boolean(user?.roles?.includes('super-admin')),
+				Boolean(user?.roles?.includes('super-user')),
 		}),
 		// storage-adapter-placeholder
 	],
