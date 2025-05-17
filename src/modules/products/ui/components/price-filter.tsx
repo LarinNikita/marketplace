@@ -1,5 +1,7 @@
 import { ChangeEvent } from 'react';
 
+import { formatCurrency } from '@/lib/utils';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
@@ -22,12 +24,7 @@ export const formatAsCurrency = (value: string) => {
 	const numberValue = parseFloat(formattedValue);
 	if (isNaN(numberValue)) return '';
 
-	return new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 2,
-	}).format(numberValue);
+	return formatCurrency(numberValue);
 };
 
 export const PriceFilter = ({
