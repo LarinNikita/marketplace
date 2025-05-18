@@ -1,17 +1,32 @@
 'use client';
 
+import { Fragment } from 'react';
+
+import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+import { LinkIcon, StarIcon } from 'lucide-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { formatCurrency, generateTenantUrl } from '@/lib/utils';
 
 import { useTRPC } from '@/trpc/client';
-import Link from 'next/link';
-import { StarRating } from '@/components/star-rating';
+
 import { Button } from '@/components/ui/button';
-import { LinkIcon, StarIcon } from 'lucide-react';
-import { Fragment } from 'react';
 import { Progress } from '@/components/ui/progress';
+import { StarRating } from '@/components/star-rating';
+
+const CartButton = dynamic(
+	() => import('../components/cart-button').then((mod) => mod.CartButton),
+	{
+		ssr: false,
+		loading: () => (
+			<Button disabled variant="reverse" className="flex-1">
+				Add to cart
+			</Button>
+		),
+	},
+);
 
 interface Props {
 	productId: string;
@@ -94,12 +109,10 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
 						<div className="h-full border-t lg:border-t-0 lg:border-l">
 							<div className="flex flex-col gap-4 border-b p-6">
 								<div className="flex flex-row items-center gap-2">
-									<Button
-										variant="reverse"
-										className="flex-1 bg-pink-400"
-									>
-										Add to cart
-									</Button>
+									<CartButton
+										productId={productId}
+										tenantSlug={tenantSlug}
+									/>
 									<Button
 										variant="reverse"
 										size="icon"
