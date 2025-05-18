@@ -6,16 +6,16 @@ import { Button } from '@/components/ui/button';
 
 interface Props {
 	total: number;
-	onCheckout: () => void;
+	onPurchase: () => void;
 	isCanceled?: boolean;
-	isPending?: boolean;
+	disable?: boolean;
 }
 
 export const CheckoutSidebar = ({
 	total,
-	onCheckout,
+	onPurchase,
 	isCanceled,
-	isPending,
+	disable,
 }: Props) => {
 	return (
 		<div className="flex flex-col overflow-hidden rounded-md border bg-white">
@@ -26,8 +26,8 @@ export const CheckoutSidebar = ({
 			<div className="flex items-center justify-center p-4">
 				<Button
 					variant="reverse"
-					disabled={isPending}
-					onClick={onCheckout}
+					disabled={disable}
+					onClick={onPurchase}
 					size="lg"
 					className="w-full bg-black text-base text-white hover:bg-pink-400 hover:text-black"
 				>
@@ -39,7 +39,7 @@ export const CheckoutSidebar = ({
 					<div className="flex w-full items-center rounded border border-red-400 bg-red-100 px-4 py-3 font-medium">
 						<div className="flex items-center">
 							<CircleXIcon className="mr-2 size-6 fill-red-500 text-red-100" />
-							<span>Checkout failed</span>
+							<span>Checkout failed. Please try again.</span>
 						</div>
 					</div>
 				</div>
