@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { ArrowLeftIcon } from 'lucide-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { ReviewSidebar } from '../components/review-sidebar';
+
 import { useTRPC } from '@/trpc/client';
 
 interface Props {
@@ -37,7 +39,7 @@ export const ProductView = ({ productId }: Props) => {
 				<div className="grid grid-cols-1 gap-4 lg:grid-cols-7 lg:gap-16">
 					<div className="lg:col-span-2">
 						<div className="gap-4 rounded-md border bg-white p-4">
-							TODO: Review sidebar
+							<ReviewSidebar productId={productId} />
 						</div>
 					</div>
 					<div className="lg:col-span-5">

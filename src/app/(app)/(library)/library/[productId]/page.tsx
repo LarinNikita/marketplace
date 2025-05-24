@@ -14,8 +14,15 @@ export default async function Page({ params }: Props) {
 	const { productId } = await params;
 
 	const queryClient = getQueryClient();
+
 	void queryClient.prefetchQuery(
 		trpc.library.getOne.queryOptions({
+			productId,
+		}),
+	);
+
+	void queryClient.prefetchQuery(
+		trpc.reviews.getOne.queryOptions({
 			productId,
 		}),
 	);
