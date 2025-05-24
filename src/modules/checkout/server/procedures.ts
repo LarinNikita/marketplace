@@ -2,6 +2,8 @@ import { z } from 'zod';
 import type Stripe from 'stripe';
 import { TRPCError } from '@trpc/server';
 
+import { stripe } from '@/lib/stripe';
+
 import { Media, Tenant } from '@/payload-types';
 
 import { CheckoutMetadata, ProductMetadata } from '../types';
@@ -11,7 +13,6 @@ import {
 	createTRPCRouter,
 	protectedProcedure,
 } from '@/trpc/init';
-import { stripe } from '@/lib/stripe';
 
 export const checkoutRouter = createTRPCRouter({
 	purchase: protectedProcedure

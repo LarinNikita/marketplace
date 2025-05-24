@@ -110,6 +110,7 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
 							<div className="flex flex-col gap-4 border-b p-6">
 								<div className="flex flex-row items-center gap-2">
 									<CartButton
+										isPurchase={data.isPurchase}
 										productId={productId}
 										tenantSlug={tenantSlug}
 									/>
