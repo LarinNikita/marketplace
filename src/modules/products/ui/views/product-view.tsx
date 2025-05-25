@@ -4,6 +4,7 @@ import { Fragment } from 'react';
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
 import { LinkIcon, StarIcon } from 'lucide-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -86,13 +87,20 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
 							</div>
 							<div className="hidden items-center justify-center px-6 py-4 lg:flex">
 								<div className="flex items-center gap-1">
-									<StarRating rating={3} />
+									<StarRating
+										rating={data.reviewRating}
+										text={`${data.reviewCount} ratings`}
+										className="size-4"
+									/>
 								</div>
 							</div>
 						</div>
 						<div className="block items-center justify-center border-b px-6 py-4 lg:hidden">
 							<div className="flex items-center gap-1">
-								<StarRating rating={3} text={`${5} ratings`} />
+								<StarRating
+									rating={data.reviewRating}
+									text={`${data.reviewCount} ratings`}
+								/>
 							</div>
 						</div>
 						<div className="p-6">
@@ -118,7 +126,14 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
 										variant="reverse"
 										size="icon"
 										className="bg-white"
-										onClick={() => {}}
+										onClick={() => {
+											navigator.clipboard.writeText(
+												window.location.href,
+											);
+											toast.success(
+												'URL Copied to clipboard',
+											);
+										}}
 										disabled={false}
 									>
 										<LinkIcon />
@@ -137,8 +152,10 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
 									</h3>
 									<div className="flex items-center gap-x-1 font-medium">
 										<StarIcon className="size-4 fill-black" />
-										<p>({5})</p>
-										<p className="text-base">{5} ratings</p>
+										<p>({data.reviewRating})</p>
+										<p className="text-base">
+											{data.reviewCount} ratings
+										</p>
 									</div>
 								</div>
 								<div className="mt-4 grid grid-cols-[auto_1fr_auto] gap-3">
@@ -149,11 +166,16 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
 												{stars === 1 ? 'star' : 'stars'}
 											</div>
 											<Progress
-												value={25}
+												value={
+													data.ratingDistribution[
+														stars
+													]
+												}
 												className="h-[1lh] rounded-full"
 											/>
 											<div className="font-medium">
-												{25}%
+												{data.ratingDistribution[stars]}
+												%
 											</div>
 										</Fragment>
 									))}
