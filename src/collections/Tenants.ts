@@ -1,7 +1,13 @@
 import type { CollectionConfig } from 'payload';
 
+import { isSuperAdmin } from '@/lib/access';
+
 export const Tenants: CollectionConfig = {
 	slug: 'tenants',
+	access: {
+		create: ({ req }) => isSuperAdmin(req.user),
+		delete: ({ req }) => isSuperAdmin(req.user),
+	},
 	admin: {
 		useAsTitle: 'slug',
 	},
@@ -36,13 +42,20 @@ export const Tenants: CollectionConfig = {
 			name: 'stripeAccountId',
 			type: 'text',
 			required: true,
+			access: {
+				update: ({ req }) => isSuperAdmin(req.user),
+			},
 			admin: {
 				readOnly: true,
+				description: 'Stripe Account ID associated with your shop',
 			},
 		},
 		{
 			name: 'stripeDetailsSubmitted',
 			type: 'checkbox',
+			access: {
+				update: ({ req }) => isSuperAdmin(req.user),
+			},
 			admin: {
 				readOnly: true,
 				description:
