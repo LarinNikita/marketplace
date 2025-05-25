@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 import { CheckCheckIcon, LinkIcon, StarIcon } from 'lucide-react';
 
 import { formatCurrency, generateTenantUrl } from '@/lib/utils';
@@ -107,7 +108,7 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
 						</div>
 						<div className="p-6">
 							{data.description ? (
-								<p>{data.description}</p>
+								<RichText data={data.description} />
 							) : (
 								<p className="text-main-foreground font-medium italic">
 									No description provided
@@ -194,6 +195,23 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export const ProductViewSkeleton = () => {
+	return (
+		<div className="px-4 py-10 lg:px-12">
+			<div className="overflow-hidden rounded-sm border bg-white">
+				<div className="relative aspect-[3.9] border-b">
+					<Image
+						src="/placeholder.png"
+						alt="Placeholder"
+						fill
+						className="object-cover"
+					/>
 				</div>
 			</div>
 		</div>

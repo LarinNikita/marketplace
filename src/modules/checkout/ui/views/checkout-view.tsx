@@ -88,7 +88,7 @@ export const CheckoutView = ({ tenantSlug }: Props) => {
 		);
 	}
 
-	if (data?.totalDocs === 0) {
+	if (data?.totalDocs === 0 || error?.data?.code === 'NOT_FOUND') {
 		return (
 			<div className="px-4 pt-4 lg:px-16 lg:pt-16">
 				<div className="flex w-full flex-col items-center justify-center gap-y-4 rounded-lg border border-dashed border-black bg-white p-8">

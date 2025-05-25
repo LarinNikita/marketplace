@@ -3,7 +3,7 @@ import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 import { buildConfig } from 'payload';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
-import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { lexicalEditor, UploadFeature } from '@payloadcms/richtext-lexical';
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud';
 import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant';
 
@@ -43,7 +43,23 @@ export default buildConfig({
 		Orders,
 		Reviews,
 	],
-	editor: lexicalEditor(),
+	editor: lexicalEditor({
+		features: ({ defaultFeatures }) => [
+			...defaultFeatures,
+			UploadFeature({
+				collections: {
+					media: {
+						fields: [
+							{
+								name: 'alt',
+								type: 'text',
+							},
+						],
+					},
+				},
+			}),
+		],
+	}),
 	secret: process.env.PAYLOAD_SECRET || '',
 	typescript: {
 		outputFile: path.resolve(dirname, 'payload-types.ts'),
