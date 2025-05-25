@@ -12,5 +12,9 @@ export const generatedAuthCookie = async ({ prefix, value }: Props) => {
 		value: value,
 		httpOnly: true,
 		path: '/',
+		//! This break local login
+		// sameSite: "none",
+		// domain: process.env.NEXT_PUBLIC_ROOT_DOMAIN,
+		// secure: process.env.NODE_ENV === "production"
 	});
 };
