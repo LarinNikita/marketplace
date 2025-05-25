@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 import { CheckCheckIcon, LinkIcon, StarIcon } from 'lucide-react';
 
 import { formatCurrency, generateTenantUrl } from '@/lib/utils';
@@ -107,7 +108,7 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
 						</div>
 						<div className="p-6">
 							{data.description ? (
-								<p>{data.description}</p>
+								<RichText data={data.description} />
 							) : (
 								<p className="text-main-foreground font-medium italic">
 									No description provided

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload';
+import { lexicalEditor, UploadFeature } from '@payloadcms/richtext-lexical';
 
 import { isSuperAdmin } from '@/lib/access';
 
@@ -28,7 +29,7 @@ export const Products: CollectionConfig = {
 		},
 		{
 			name: 'description',
-			type: 'text',
+			type: 'richText',
 		},
 		{
 			name: 'price',
@@ -70,11 +71,20 @@ export const Products: CollectionConfig = {
 		},
 		{
 			name: 'content',
-			// TODO Change to Richtext
-			type: 'textarea',
+			type: 'richText',
 			admin: {
 				description:
 					'Protected content only visible to customers after purchase. Add product documentation, downloadable files, getting started guides, and bonus materials. Supports Markdown formatting.',
+			},
+		},
+		{
+			name: 'isPrivate',
+			label: 'Private',
+			defaultValue: false,
+			type: 'checkbox',
+			admin: {
+				description:
+					'If checked, this product will be shown on the public storefront',
 			},
 		},
 		{
