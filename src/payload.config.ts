@@ -16,6 +16,8 @@ import { Reviews } from './collections/Reviews';
 import { Products } from './collections/Products';
 import { Categories } from './collections/Categories';
 
+import { isSuperAdmin } from './lib/access';
+
 import { Config } from './payload-types';
 
 const filename = fileURLToPath(import.meta.url);
@@ -56,8 +58,7 @@ export default buildConfig({
 			tenantsArrayField: {
 				includeDefaultField: false,
 			},
-			userHasAccessToAllTenants: (user) =>
-				Boolean(user?.roles?.includes('super-user')),
+			userHasAccessToAllTenants: (user) => isSuperAdmin(user),
 		}),
 		// storage-adapter-placeholder
 	],
