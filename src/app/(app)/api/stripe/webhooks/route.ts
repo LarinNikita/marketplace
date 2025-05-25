@@ -61,9 +61,15 @@ export async function POST(req: Request) {
 					}
 
 					const expandedSession =
-						await stripe.checkout.sessions.retrieve(data.id, {
-							expand: ['line_items.data.price.product'],
-						});
+						await stripe.checkout.sessions.retrieve(
+							data.id,
+							{
+								expand: ['line_items.data.price.product'],
+							},
+							{
+								stripeAccount: event.account,
+							},
+						);
 
 					if (
 						!expandedSession.line_items?.data ||

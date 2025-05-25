@@ -2,6 +2,8 @@ import { z } from 'zod';
 import type Stripe from 'stripe';
 import { TRPCError } from '@trpc/server';
 
+import { PLATFORM_FEE_PERCENTAGE } from '@/constants';
+
 import { stripe } from '@/lib/stripe';
 
 import { Media, Tenant } from '@/payload-types';
@@ -112,7 +114,12 @@ export const checkoutRouter = createTRPCRouter({
 				});
 			}
 
-			// TODO Throw error if stripe details not submitted
+			if (!tenant.stripeDetailsSubmitted) {
+				throw new TRPCError({
+					code: 'BAD_REQUEST',
+					message: 'Tenant not allowed to sell products',
+				});
+			}
 
 			const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] =
 				products.docs.map((product) => ({
@@ -132,19 +139,35 @@ export const checkoutRouter = createTRPCRouter({
 					},
 				}));
 
-			const checkout = await stripe.checkout.sessions.create({
-				customer_email: ctx.session.user.email,
-				success_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${input.tenantSlug}/checkout?success=true`,
-				cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${input.tenantSlug}/checkout?cancel=true`,
-				mode: 'payment',
-				line_items: lineItems,
-				invoice_creation: {
-					enabled: true,
+			const totalAmount = products.docs.reduce(
+				(acc, item) => acc + item.price * 100,
+				0,
+			);
+			const platformFeeAmount = Math.round(
+				totalAmount * (PLATFORM_FEE_PERCENTAGE / 100),
+			);
+
+			const checkout = await stripe.checkout.sessions.create(
+				{
+					customer_email: ctx.session.user.email,
+					success_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${input.tenantSlug}/checkout?success=true`,
+					cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${input.tenantSlug}/checkout?cancel=true`,
+					mode: 'payment',
+					line_items: lineItems,
+					invoice_creation: {
+						enabled: true,
+					},
+					metadata: {
+						userId: ctx.session.user.id,
+					} as CheckoutMetadata,
+					payment_intent_data: {
+						application_fee_amount: platformFeeAmount,
+					},
 				},
-				metadata: {
-					userId: ctx.session.user.id,
-				} as CheckoutMetadata,
-			});
+				{
+					stripeAccount: tenant.stripeAccountId,
+				},
+			);
 
 			if (!checkout.url) {
 				throw new TRPCError({
