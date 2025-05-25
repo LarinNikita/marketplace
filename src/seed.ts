@@ -160,7 +160,7 @@ const seed = async () => {
 			username: 'admin',
 			email: process.env.PAYLOAD_ADMIN_EMAIL!,
 			password: process.env.PAYLOAD_ADMIN_PASSWORD!,
-			roles: ['super-user'],
+			roles: ['super-admin'],
 			tenants: [
 				{
 					tenant: adminTenant.id,
