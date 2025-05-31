@@ -31,7 +31,11 @@ export const SearchInput = ({ disabled }: Props) => {
 			/>
 			<div className="relative w-full">
 				<SearchIcon className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-neutral-500" />
-				<Input className="pl-8" placeholder="Search products" />
+				<Input
+					className="pl-8"
+					placeholder="Search products"
+					disabled={disabled}
+				/>
 			</div>
 			<Button
 				variant="reverse"

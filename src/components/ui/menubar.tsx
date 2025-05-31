@@ -217,14 +217,17 @@ function MenubarShortcut({
 	);
 }
 
-function MenubarSubTrigger({
-	className,
-	inset,
-	children,
-	...props
-}: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubTrigger> & {
-	inset?: boolean;
-}) {
+function MenubarSubTrigger(
+	{
+		className,
+		// inset,
+		children,
+		...props
+	}: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubTrigger>,
+	// & {
+	// 	inset?: boolean;
+	// }
+) {
 	return (
 		<MenubarPrimitive.SubTrigger
 			data-slot="menubar-sub-trigger"

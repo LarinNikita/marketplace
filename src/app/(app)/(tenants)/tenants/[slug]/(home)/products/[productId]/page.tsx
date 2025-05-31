@@ -9,6 +9,8 @@ import {
 
 import { getQueryClient, trpc } from '@/trpc/server';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
 	params: Promise<{ productId: string; slug: string }>;
 }

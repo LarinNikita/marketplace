@@ -8,6 +8,8 @@ import { ProductListView } from '@/modules/products/ui/views/product-list-view';
 
 import { getQueryClient, trpc } from '@/trpc/server';
 
+export const dynamic = 'force-dynamic';
+
 type Props = {
 	searchParams: Promise<SearchParams>;
 	params: Promise<{ slug: string }>;

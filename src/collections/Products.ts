@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload';
-import { lexicalEditor, UploadFeature } from '@payloadcms/richtext-lexical';
 
 import { isSuperAdmin } from '@/lib/access';
 

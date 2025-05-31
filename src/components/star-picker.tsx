@@ -10,15 +10,9 @@ interface Props {
 	value?: number;
 	onChange?: (value: number) => void;
 	disabled?: boolean;
-	className?: string;
 }
 
-export const StarPicker = ({
-	value = 0,
-	onChange,
-	disabled,
-	className,
-}: Props) => {
+export const StarPicker = ({ value = 0, onChange, disabled }: Props) => {
 	const [hoverValue, setHoverValue] = useState(0);
 
 	return (

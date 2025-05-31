@@ -9,6 +9,8 @@ import { ProductViewSkeleton } from '@/modules/library/ui/views/product-view';
 
 import { getQueryClient, trpc } from '@/trpc/server';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page() {
 	const queryClient = getQueryClient();
 	void queryClient.prefetchInfiniteQuery(
